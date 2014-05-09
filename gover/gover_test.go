@@ -89,7 +89,7 @@ var _ = Describe("Gover", func() {
 				var tmpPath string
 				BeforeEach(func() {
 					root = filepath.Join(fixturesDir(), "nested_cover_profiles")
-					tmpPath = filepath.Join(root, "tmp.coverprofile")
+					tmpPath = filepath.Join(root, "unreadable.coverprofile")
 					ioutil.WriteFile(tmpPath, []byte("unreadable!"), os.ModeAppend)
 				})
 				AfterEach(func() {
