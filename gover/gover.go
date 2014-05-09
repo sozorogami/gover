@@ -49,9 +49,6 @@ func Gover(root, out string) {
 				readStr = re.ReplaceAllString(readStr, "")
 			}
 
-			if strings.HasPrefix(buffer.String(), "mode:") {
-
-			}
 			buffer.WriteString(readStr)
 		} else {
 			log.Println("gover: Could not read file:", path)
