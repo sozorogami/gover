@@ -57,9 +57,9 @@ var _ = Describe("Gover", func() {
 				BeforeEach(func() {
 					root = filepath.Join(fixturesDir(), "root_cover_profile")
 				})
-				It("creates a file at out with its content", func() {
+				It("writes its content to out", func() {
 					Gover(root, out)
-					Expect(readFile(out)).To(Equal("mario\n"))
+					Expect(readFile(out)).To(Equal("mode: set\nmario\n"))
 				})
 			})
 
@@ -67,9 +67,10 @@ var _ = Describe("Gover", func() {
 				BeforeEach(func() {
 					root = filepath.Join(fixturesDir(), "root_cover_profiles")
 				})
-				It("creates a file at out with their contents (in filename alphabetical order)", func() {
+
+				It("writes their content to out, using the mode of the first alphabetically", func() {
 					Gover(root, out)
-					Expect(readFile(out)).To(Equal("mario\na link to the past\n"))
+					Expect(readFile(out)).To(Equal("mode: set\nmario\na link to the past\n"))
 				})
 			})
 
@@ -77,9 +78,9 @@ var _ = Describe("Gover", func() {
 				BeforeEach(func() {
 					root = filepath.Join(fixturesDir(), "nested_cover_profiles")
 				})
-				It("creates a file at out with their contents", func() {
+				It("writes their content to out", func() {
 					Gover(root, out)
-					Expect(readFile(out)).To(Equal("mario\na link to the past\nsonic\n"))
+					Expect(readFile(out)).To(Equal("mode: set\nmario\na link to the past\nsonic\n"))
 				})
 			})
 		})

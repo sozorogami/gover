@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
+	"strings"
 )
 
 const (
@@ -22,7 +24,17 @@ func Gover(root, out string) {
 
 		readBytes, readErr := ioutil.ReadFile(path)
 		if readErr == nil {
-			buffer.WriteString(string(readBytes))
+			readStr := string(readBytes)
+
+			re, _ := regexp.Compile("^mode: [a-z]+\n")
+			if re.Match(buffer.Bytes()) {
+				readStr = re.ReplaceAllString(readStr, "")
+			}
+
+			if strings.HasPrefix(buffer.String(), "mode:") {
+
+			}
+			buffer.WriteString(readStr)
 		} else {
 			log.Println("gover: Could not read file:", path)
 		}
