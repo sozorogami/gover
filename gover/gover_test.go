@@ -3,6 +3,7 @@ package gover_test
 import (
 	. "github.com/modocache/gover/gover"
 
+	"fmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
@@ -79,6 +80,23 @@ var _ = Describe("Gover", func() {
 					root = filepath.Join(fixturesDir(), "nested_cover_profiles")
 				})
 				It("writes their content to out", func() {
+					Gover(root, out)
+					Expect(readFile(out)).To(Equal("mode: set\nmario\na link to the past\nsonic\n"))
+				})
+			})
+
+			Context("and it contains some .coverprofile files that can't be read", func() {
+				var tmpPath string
+				BeforeEach(func() {
+					root = filepath.Join(fixturesDir(), "nested_cover_profiles")
+					tmpPath = filepath.Join(root, "tmp.coverprofile")
+					ioutil.WriteFile(tmpPath, []byte("unreadable!"), os.ModeAppend)
+				})
+				AfterEach(func() {
+					os.Remove(tmpPath)
+				})
+				It("writes their content to out", func() {
+					fmt.Println("\ngover_test.go: should display warning:")
 					Gover(root, out)
 					Expect(readFile(out)).To(Equal("mode: set\nmario\na link to the past\nsonic\n"))
 				})
