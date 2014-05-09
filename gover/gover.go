@@ -1,3 +1,7 @@
+/*
+Functions for walking a file tree and concatenating all files with the
+".coverprofile" extension. Designed for use with the `gover` command-line tool.
+*/
 package gover
 
 import (
@@ -11,9 +15,23 @@ import (
 )
 
 const (
+	/*
+		The file extension to be concatenated. Currently gover assumes this
+		will always be '.coverprofile'.
+	*/
 	Extension = ".coverprofile"
 )
 
+/*
+Walks the file tree at `root`, concatenates all files ending with `Extension`,
+then writes those files to `out`.
+
+If `root` is an invalid path or does not contain any relevant files, an empty
+string is written to `out`.
+
+If `out` already exists, this function appends the concatenation to `out`. If
+`out` does not exist, a new file is created with readwrite permissions (0666).
+*/
 func Gover(root, out string) {
 	var buffer bytes.Buffer
 

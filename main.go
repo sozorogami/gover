@@ -1,3 +1,13 @@
+/*
+Usage: gover [root] [out]
+
+Collects all .coverprofile files rooted in [root] and concatenantes them
+into a single file at [out].
+
+[root] defaults to the current directory, [out] to 'gover.coverprofile'.
+
+For more details, consult the README: https://github.com/modocache/gover
+*/
 package main
 
 import (
