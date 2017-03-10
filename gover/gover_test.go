@@ -7,13 +7,17 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 )
 
 func fixturesDir() string {
-	dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
-	return filepath.Join(dir, "_fixtures")
+	dir, err := filepath.Abs("_fixtures")
+	if err != nil {
+		log.Fatal(err)
+	}
+	return dir
 }
 
 func readFile(path string) string {
