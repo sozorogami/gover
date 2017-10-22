@@ -25,6 +25,9 @@ const (
 Walks the file tree at `root`, concatenates all files ending with `Extension`,
 then writes those files to `out`.
 
+`out` is not appended to itself, even if it is under `root` and matches
+`Extension`.
+
 If `root` is an invalid path or does not contain any relevant files, an empty
 string is written to `out`.
 
@@ -33,9 +36,16 @@ If `out` already exists, this function appends the concatenation to `out`. If
 */
 func Gover(root, out string) {
 	var buffer bytes.Buffer
+	abs_out, err := filepath.Abs(out)
+	if err != nil {
+		log.Fatal("gover: Could not canonicalize out path:", err)
+	}
 
 	walkFn := func(path string, info os.FileInfo, err error) error {
 		if filepath.Ext(path) != Extension {
+			return err
+		}
+		if abs_out == path {
 			return err
 		}
 
@@ -57,7 +67,7 @@ func Gover(root, out string) {
 	}
 
 	filepath.Walk(root, walkFn)
-	err := ioutil.WriteFile(out, buffer.Bytes(), 0666)
+	err = ioutil.WriteFile(out, buffer.Bytes(), 0666)
 	if err != nil {
 		log.Fatal("gover: Could not write to out:", out)
 	}
