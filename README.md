@@ -14,7 +14,7 @@ Use with [mattn/goveralls](https://github.com/mattn/goveralls) to send metrics
 to [coveralls.io](https://coveralls.io/):
 
 ```sh
-go get code.google.com/p/go.tools/cmd/cover
+go get golang.org/x/tools/cmd/cover
 go get github.com/modocache/gover
 go get github.com/mattn/goveralls
 
@@ -25,7 +25,7 @@ goveralls -coverprofile=gover.coverprofile -service drone.io -repotoken $COVERAL
 
 ### Options
 
-```
+```console
 Usage: gover [root] [out]
 
 Collects all .coverprofile files rooted in [root] and concatenantes them
